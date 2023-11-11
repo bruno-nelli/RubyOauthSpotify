@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class SessionsController < ActionController::Base
   def create
     auth = request.env['omniauth.auth']
 
