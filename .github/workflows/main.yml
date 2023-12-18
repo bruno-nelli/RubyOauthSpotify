@@ -17,7 +17,7 @@ jobs:
           RAILS_ENV: test
         ports:
           - "3000:3000"  # Ajuste conforme a porta necessária para a sua aplicação Ruby
-        options: --entrypoint "tail -f /dev/null"  # Evita que o serviço Docker Compose encerre automaticamente
+        options: --entrypoint "sleep infinity"
 
     steps:
     - name: Checkout Repository
