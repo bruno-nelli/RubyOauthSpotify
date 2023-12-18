@@ -3,7 +3,7 @@ name: Test and Obtain Access Token
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   test_and_obtain_token:
