@@ -3,7 +3,7 @@ name: Test and Obtain Access Token
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   test_and_obtain_token:
@@ -16,6 +16,8 @@ jobs:
         env:
           RAILS_ENV: test
         command: ["up"]
+        ports:
+          - "3000:3000"  # Ajuste conforme a porta necessária para a sua aplicação Ruby
 
     steps:
     - name: Checkout Repository
