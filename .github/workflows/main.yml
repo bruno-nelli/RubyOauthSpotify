@@ -3,7 +3,7 @@ name: Test and Obtain Access Token
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   test_and_obtain_token:
@@ -13,7 +13,6 @@ jobs:
       # Inicia o serviço Docker-in-Docker
       docker:
         image: docker:20.10.8-dind
-        command: ["--experimental"]
         ports:
           - "3000:3000"  # Ajuste conforme a porta necessária para a sua aplicação Ruby
 
@@ -30,6 +29,10 @@ jobs:
     - name: Set up Docker Compose for Main.rb
       run: |
         docker-compose -f path/to/your/docker-compose.yml up -d
+
+    - name: Wait for services to start
+      run: |
+        dockerize -wait tcp://localhost:3000 -timeout 1m
 
     - name: Execute Main.rb
       run: |
