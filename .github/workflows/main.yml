@@ -1,0 +1,37 @@
+name: Test and Obtain Access Token
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test_and_obtain_token:
+    runs-on: ubuntu-latest
+
+    services:
+      # Inicia o serviço Docker Compose com a aplicação Ruby
+      ruby-app:
+        image: docker/compose:1.29.2
+        env:
+          RAILS_ENV: test
+        command: ["up"]
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Run Cypress Tests
+      uses: cypress-io/github-action@v2
+      with:
+        record: true
+        browser: chrome
+
+    - name: Set up Docker Compose for Main.rb
+      run: |
+        docker-compose -f path/to/your/docker-compose.yml down
+        docker-compose -f path/to/your/docker-compose.yml up -d
+
+    - name: Execute Main.rb
+      run: |
+        docker exec your_ruby_container_name ruby main.rb ${{ secrets.SPOTIFY_ACCESS_TOKEN }}
