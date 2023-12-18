@@ -10,14 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      # Inicia o serviço Docker Compose com a aplicação Ruby
-      ruby-app:
-        image: docker/compose:1.29.2
-        env:
-          RAILS_ENV: test
+      # Inicia o serviço Docker-in-Docker
+      docker:
+        image: docker:20.10.8-dind
+        command: ["--experimental"]
         ports:
           - "3000:3000"  # Ajuste conforme a porta necessária para a sua aplicação Ruby
-        options: --entrypoint "sleep infinity"
 
     steps:
     - name: Checkout Repository
