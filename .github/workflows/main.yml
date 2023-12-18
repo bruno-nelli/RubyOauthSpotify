@@ -15,9 +15,9 @@ jobs:
         image: docker/compose:1.29.2
         env:
           RAILS_ENV: test
-        command: ["up"]
         ports:
           - "3000:3000"  # Ajuste conforme a porta necessária para a sua aplicação Ruby
+        options: --entrypoint "tail -f /dev/null"  # Evita que o serviço Docker Compose encerre automaticamente
 
     steps:
     - name: Checkout Repository
@@ -31,7 +31,6 @@ jobs:
 
     - name: Set up Docker Compose for Main.rb
       run: |
-        docker-compose -f path/to/your/docker-compose.yml down
         docker-compose -f path/to/your/docker-compose.yml up -d
 
     - name: Execute Main.rb
